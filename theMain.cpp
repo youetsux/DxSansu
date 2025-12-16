@@ -5,7 +5,7 @@
 
 namespace
 {
-	const int BGCOLOR[3] = {0, 0, 0}; // 背景色{ 255, 250, 205 }; // 背景色
+	const int BGCOLOR[3] = {0, 0, 51}; // 背景色{ 255, 250, 205 }; // 背景色
 	int crrTime;
 	int prevTime;
 }
@@ -31,22 +31,31 @@ void DxInit()
 	SetDrawScreen(DX_SCREEN_BACK);
 }
 
-void MyGame()
+void Initialize()
 {
-
-	DrawFormatString(100, 100, GetColor(0, 0, 0), "ウィンドウのテスト");
-	static int timer = 0;
-	timer++;
-	DrawFormatString(100, 150, GetColor(0, 0, 0), "%010d", timer);
+	// 独自の初期化処理をここに記述
 }
 
-
+void Update()
+{
+	// 独自の更新処理をここに記述
+}
+void Draw()
+{
+	// 独自の描画処理をここに記述
+}
+void Release()
+{
+	// 独自の終了処理をここに記述
+}
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
 	DxInit();
 	crrTime = GetNowCount();
 	prevTime = GetNowCount();
+
+	Initialize(); // 独自の初期化処理
 
 	while (true)
 	{
@@ -59,7 +68,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		gDeltaTime = deltaTime; // グローバル変数に保存
 
 		//ここにやりたい処理を書く
-
+		Update(); // 独自の更新処理
+		Draw(); // 独自の描画処理
 
 		ScreenFlip();
 		WaitTimer(16);
@@ -72,6 +82,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 			break;
 	}
 
+	Release(); // 独自の終了処理
 	DxLib_End();
 	return 0;
 }
