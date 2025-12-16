@@ -1,6 +1,7 @@
 #include "DxLib.h"
 #include "globals.h"
 #include "input.h"
+#include "Player.h"
 
 
 namespace
@@ -8,6 +9,7 @@ namespace
 	const int BGCOLOR[3] = {0, 0, 51}; // 背景色{ 255, 250, 205 }; // 背景色
 	int crrTime;
 	int prevTime;
+	Player* player;
 }
 
 
@@ -34,15 +36,19 @@ void DxInit()
 void Initialize()
 {
 	// 独自の初期化処理をここに記述
+	player = new Player(Vector2D(512.0f, 384.0f), 30.0f, 0xffff0000);
 }
 
 void Update()
 {
+	
 	// 独自の更新処理をここに記述
+	player->Update();
 }
 void Draw()
 {
 	// 独自の描画処理をここに記述
+	player->Draw();
 }
 void Release()
 {
@@ -66,7 +72,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 前回の時間との差分を計算
 		float deltaTime = (crrTime - prevTime) / 1000.0f; // 秒単位に変換
 		gDeltaTime = deltaTime; // グローバル変数に保存
-
+		
 		//ここにやりたい処理を書く
 		Update(); // 独自の更新処理
 		Draw(); // 独自の描画処理
