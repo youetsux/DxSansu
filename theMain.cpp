@@ -1,13 +1,15 @@
 #include "DxLib.h"
 #include "globals.h"
 #include "input.h"
-
+#include "Player.h"
 
 namespace
 {
 	const int BGCOLOR[3] = {0, 0, 51}; // ”wŒiF{ 255, 250, 205 }; // ”wŒiF
 	int crrTime;
 	int prevTime;
+
+	Player* player = nullptr;
 }
 
 
@@ -34,15 +36,19 @@ void DxInit()
 void Initialize()
 {
 	// “ÆŽ©‚Ì‰Šú‰»ˆ—‚ð‚±‚±‚É‹Lq
+	player = new Player({ WIN_WIDTH/2, WIN_HEIGHT/2 }, { 0,0 }, GetColor(255, 0, 0),
+		{ 0,-1 }, 60.0, 1.0f);
 }
 
 void Update()
 {
 	// “ÆŽ©‚ÌXVˆ—‚ð‚±‚±‚É‹Lq
+	player->Update();
 }
 void Draw()
 {
 	// “ÆŽ©‚Ì•`‰æˆ—‚ð‚±‚±‚É‹Lq
+	player->Draw();
 }
 void Release()
 {
