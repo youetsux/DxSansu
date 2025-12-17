@@ -1,6 +1,6 @@
 #pragma once
 #include <cmath>
-
+#include "globals.h"
 ///////////////////////////////////////////////
 // 2D ƒxƒNƒgƒ‹Œ^
 ///////////////////////////////////////////////
@@ -187,5 +187,22 @@ namespace Math2D
 		res.x = m.m00 * v.x + m.m01 * v.y + m.tx;
 		res.y = m.m10 * v.x + m.m11 * v.y + m.ty;
 		return res;
+	}
+
+	inline Vector2D World2Screen(const Vector2D& wpos)
+	{
+		Vector2D tmp;//temporary=ì‹Æ—Ìˆæ
+		tmp.x = wpos.x;
+		tmp.y = WIN_HEIGHT - wpos.y;
+		return(tmp);
+	}
+
+	inline float ToRadian(float degree)
+	{
+		return(degree * (PI / 180.0f));
+	}
+	inline float ToDegree(float radian)
+	{
+		return(radian * (180.0f / PI));
 	}
 }
