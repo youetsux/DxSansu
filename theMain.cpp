@@ -42,6 +42,7 @@ void Initialize()
 
 void Update()
 {
+	
 	// 独自の更新処理をここに記述
 	player->Update();
 }
@@ -72,7 +73,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 前回の時間との差分を計算
 		float deltaTime = (crrTime - prevTime) / 1000.0f; // 秒単位に変換
 		gDeltaTime = deltaTime; // グローバル変数に保存
-
+		
 		//ここにやりたい処理を書く
 		Update(); // 独自の更新処理
 		Draw(); // 独自の描画処理
