@@ -1,6 +1,8 @@
 #include "Stage.h"
 #include "Player.h"
 #include <DxLib.h>
+#include "Input.h"
+#include "Bullet.h"
 
 namespace
 {
@@ -65,6 +67,52 @@ void Stage::Update()
     {
         player_->Update();
     }
+    // 弾発射（押した瞬間）
+    if (Input::IsKeyDown(KEY_INPUT_Z))
+    {
+        SpawnBullet();
+    }
+
+    for (auto b : bullets_) b->Update();
+
+    // 寿命で削除
+    bullets_.erase(
+        std::remove_if(bullets_.begin(), bullets_.end(),
+            [](const Bullet* b) { return b->IsDead(); }),
+        bullets_.end()
+    );
+}
+
+void Stage::SpawnBullet()
+{
+    if (!player_) return;
+
+    // ※ Player 側に以下のアクセサがある前提：
+    //   - Vector2D GetPos() const;
+    //   - Vector2D GetVel() const;   （無いなら 0 でOK）
+    //   - Vector2D GetDir() const;
+    //   - float    GetRadius() const;
+
+    Vector2D dir = player_->GetDir();
+    Vector2D pos = player_->GetPos();
+
+    // 発射位置を少し前へ（自分の半径＋少し）
+    const float offset = player_->GetRadius() + 8.0f;
+    pos.x += dir.x * offset;
+    pos.y += dir.y * offset;
+
+    Vector2D vel;
+    vel.x = dir.x * BulletParams::SPEED;
+    vel.y = dir.y * BulletParams::SPEED;
+
+    // プレイヤーの慣性を弾に乗せたいなら（GetVel() がある場合のみ）
+    // Vector2D pv = player_->GetVel();
+    // vel.x += pv.x;
+    // vel.y += pv.y;
+
+    bullets_.push_back(
+        new Bullet(pos, vel, BulletParams::COLOR(), BulletParams::RADIUS, BulletParams::LIFE)
+    );
 }
 
 void Stage::Draw()
