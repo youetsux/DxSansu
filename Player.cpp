@@ -121,6 +121,19 @@ void Player::Update()
 	// 位置更新（慣性移動）
 	pos_.x += vel_.x * dt;
 	pos_.y += vel_.y * dt;
+
+	// ----------------------------
+// 画面端ワープ（数学座標）
+// ----------------------------
+	const float W = (float)WIN_WIDTH;
+	const float H = (float)WIN_HEIGHT;
+
+	// 半径分だけ外に出たら反対側へ（見た目が自然）
+	if (pos_.x < -radius_)      pos_.x += (W + radius_ * 2.0f);
+	else if (pos_.x > W + radius_) pos_.x -= (W + radius_ * 2.0f);
+
+	if (pos_.y < -radius_)      pos_.y += (H + radius_ * 2.0f);
+	else if (pos_.y > H + radius_) pos_.y -= (H + radius_ * 2.0f);
 }
 
 void Player::Draw()

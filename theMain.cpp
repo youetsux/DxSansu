@@ -37,7 +37,7 @@ void Initialize()
 {
 	// “Æ©‚Ì‰Šú‰»ˆ—‚ğ‚±‚±‚É‹Lq
 	player = new Player({ WIN_WIDTH/2, WIN_HEIGHT/2 }, { 0,0 }, GetColor(255, 0, 0),
-		{ 0,-1 }, 30.0, 2.0f);
+		{ 0,-1 }, 20.0, 2.0f);
 }
 
 void Update()
