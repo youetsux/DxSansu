@@ -4,6 +4,7 @@
 #include <DxLib.h>
 #include <cmath>
 
+
 Bullet::Bullet(const Vector2D& pos, const Vector2D& vel, unsigned int color,
     float radius, float lifeSec)
     : Base(pos, vel, color)

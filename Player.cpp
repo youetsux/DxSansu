@@ -15,7 +15,7 @@ namespace {
 	const float DAMP = 0.995f;
 
 	// 速度上限（world座標/秒）
-	const float MAX_SPEED = 600.0f;
+	const float MAX_SPEED = 500.0f;
 
 }
 

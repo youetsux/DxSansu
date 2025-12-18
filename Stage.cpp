@@ -30,7 +30,13 @@ namespace
     // 回転速度（rad/sec）
     constexpr float OMEGA = 2.0f;
 	const unsigned int COLOR = GetColor(255, 0, 0); // 赤
-
+	namespace BulletParams
+	{
+		constexpr float SPEED = 600.0f;          // 速度
+		const unsigned int COLOR = GetColor(255, 255, 255); // 白
+		constexpr float RADIUS = 2.0f;           // 半径
+		constexpr float LIFE = 3.0f;             // 寿命（秒）
+	}
 }
 
 
@@ -93,7 +99,7 @@ void Stage::SpawnBullet()
     //   - Vector2D GetDir() const;
     //   - float    GetRadius() const;
 
-    Vector2D dir = player_->GetDir();
+    Vector2D dir = player_->GetDirVec();
     Vector2D pos = player_->GetPos();
 
     // 発射位置を少し前へ（自分の半径＋少し）
@@ -111,7 +117,7 @@ void Stage::SpawnBullet()
     // vel.y += pv.y;
 
     bullets_.push_back(
-        new Bullet(pos, vel, BulletParams::COLOR(), BulletParams::RADIUS, BulletParams::LIFE)
+        new Bullet(pos, vel, BulletParams::COLOR, BulletParams::RADIUS, BulletParams::LIFE)
     );
 }
 
@@ -121,11 +127,23 @@ void Stage::Draw()
     {
         player_->Draw();
     }
+
+    for (Bullet* b : bullets_)
+    {
+        if (b) b->Draw();
+    }
 }
 
 void Stage::Release()
 {
+
 	// 終了処理が必要ならここに書く
+    for (Bullet* b : bullets_)
+    {
+        delete b;
+    }
+    bullets_.clear();
+
 	if (player_)
 	{
 		delete player_;
