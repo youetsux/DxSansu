@@ -7,16 +7,8 @@
 
 namespace
 {
-    inline float Rand01()
-    {
-        return (float)GetRand(10000) / 10000.0f; // 0..1
-    }
 
-    inline float ClampDt(float dt)
-    {
-        if (dt > 0.05f) dt = 0.05f;
-        return dt;
-    }
+
 
     inline float WrapAngle(float a)
     {
@@ -45,10 +37,6 @@ Enemy::Enemy(const Vector2D& pos,
 
     GenerateShape(segments, baseRadius, jitter);
 
-    // ‚¿‚å‚¢•½ŠŠ‰»‚·‚é‚Æ gŠâh ‚Á‚Û‚­‚È‚é
-    //SmoothShape(0.5f);
-    //SmoothShape(0.5f);
-
     // ‘ã•\”¼Œa‚ğ­‚µˆÀ‘S‘¤‚Éi“–‚½‚è”»’è—pj
     // Å‘å’¸“_‹——£‚ğÌ—p
     float maxR2 = 0.0f;
@@ -69,8 +57,10 @@ void Enemy::GenerateShape(int segments, float baseRadius, float jitter)
     {
         float t = (float)i / (float)segments; // 0..1
         float ang = t * Math2D::PI2;
+		float rand01 = GetRand(1000) / 1000.0f; //‚O`‚P‚Ì—”
 
-        float k = 1.0f + (Rand01() * 2.0f - 1.0f) * jitter; // 1}jitter
+
+        float k = 1.0f + (rand01 * 2.0f - 1.0f) * jitter; // 1}jitter
         float r = baseRadius * k;
 
         local_.push_back(Vector2D(std::cos(ang) * r, std::sin(ang) * r));
@@ -107,7 +97,7 @@ void Enemy::Warp()
 
 void Enemy::Update()
 {
-    float dt = ClampDt(GetDeltaTime());
+    float dt =GetDeltaTime();
 
     // ‰ñ“]
     angle_ += omega_ * dt;
